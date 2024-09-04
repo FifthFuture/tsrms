@@ -75,4 +75,11 @@ volumes:
 2. **日志存储**：日志文件将存储在 `tsrms_logs` 卷中，MySQL 数据将存储在 `tsrms_mysql` 卷中，确保数据和日志不会丢失。
 3. **环境更改**：配置文件被打包在了镜像中,可在镜像文件目录`/app/conf`中查看，故需要拿到源代码，才可以实现修改配置文件
 
+### 4.部分代码展示
+
+![image](https://github.com/user-attachments/assets/117a766b-6af9-42d7-9c2d-3f47f007c40c)
+
+
+![image](https://github.com/user-attachments/assets/565c9f3d-9c21-46fc-872e-b2d3823894ba)
+
 
