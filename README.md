@@ -20,22 +20,21 @@ version: '3.8'
 
 services:
   tsrms:
-    container_name: tsrms
-    image: serverless-100026543835-docker.pkg.coding.net/trsms/tsrms/tsrms:latest
-    ports:
-      - "8080:8080"
-    environment:
-      - GO_ENV=test
-    volumes:
-      - tsrms_logs:/log
-    depends_on:
-      - mysql
-    restart: always
-
+      container_name: tsrms
+      image: serverless-100026543835-docker.pkg.coding.net/trsms/tsrms/tsrms:latest
+      ports:
+        - "8080:8080"
+      environment:
+       - GO_ENV=test
+      volumes:
+        - tsrms_logs:/app/log
+      depends_on:
+        - mysql
+      restart: always
   mysql:
     image: 'hub.atomgit.com/library/mysql:latest'
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       - MYSQL_DATABASE=tsrms
       - MYSQL_USER=tsrms
