@@ -9,6 +9,9 @@
 - 访问地址: [API 文档链接](https://apifox.com/apidoc/shared-53d80bda-a2ec-4f70-a8a2-9a643604e3f1)
 - 访问密码: `tsrms`
 
+#### 功能接口调用流程
+  ![image](https://github.com/user-attachments/assets/d60637ad-2150-4fb5-b460-ae88a4191eca)
+
 
 ### 3. 本地部署指南(如果需要)
 
@@ -27,9 +30,10 @@ services:
       environment:
        - GO_ENV=test
       volumes:
-        - tsrms_logs:/app/log
+        - tsrms_data:/app
       depends_on:
         - mysql
+        - redis
       restart: always
   mysql:
     image: 'hub.atomgit.com/library/mysql:latest'
@@ -43,9 +47,18 @@ services:
     volumes:
       - tsrms_mysql:/var/lib/mysql
 
+  redis:
+    image: 'redis:latest'
+    ports:
+      - 6379:6379
+    volumes:
+      - tsrms_redis:/data
+
 volumes:
-  tsrms_logs:
+  tsrms_data:
   tsrms_mysql:
+  tsrms_redis:
+
 ```
 
 #### 部署步骤
@@ -72,7 +85,7 @@ volumes:
 ### 注意事项
 1. **数据库配置**：`docker-compose.yml` 已配置了 `MySQL` 容器，数据库名称为 `tsrms`，并且使用 `tsrms` 作为用户名和密码。你可以根据需要修改数据库配置。
 2. **日志存储**：日志文件将存储在 `tsrms_logs` 卷中，MySQL 数据将存储在 `tsrms_mysql` 卷中，确保数据和日志不会丢失。
-3. **环境更改**：配置文件被打包在了镜像中,可在镜像文件目录`/app/conf`中查看，故需要拿到源代码，才可以实现修改配置文件
+3. **环境更改**：配置文件被打包在了镜像中,可在镜像文件目录`/app/conf`中查看，如需修改，查看存储卷的 tsrms_data下conf目录，根据环境变量GO_ENV="xxx"来确定加在的环境
 
 ### 4.部分代码展示
 
@@ -80,5 +93,8 @@ volumes:
 
 
 ![image](https://github.com/user-attachments/assets/565c9f3d-9c21-46fc-872e-b2d3823894ba)
+
+![image](https://github.com/user-attachments/assets/f42c3b72-5414-4817-833f-6e33b3b1558b)
+
 
 
